@@ -37,9 +37,9 @@ app.get("/api", (req, res) => {
     res.status(200).send(`!!! NODEJS TYPESCRIPT AUTH APP BACK END LIVE !!!`);
 });
 app.use("/api", (0, router_1.default)());
-// app.get("*", (req, res) => {  
-//     return res.sendFile(path.resolve(__dirname, "client", "index.html"));
-// });
+app.get("*", (req, res) => {
+    return res.sendFile(path_1.default.resolve(__dirname, "client", "index.html"));
+});
 app.listen(process.env.PORT, () => {
     console.log(`App Running on: http://localhost:${process.env.PORT}`);
 });
