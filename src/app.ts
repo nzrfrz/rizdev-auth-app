@@ -20,7 +20,6 @@ app.use(cors({
     credentials: true,
     optionsSuccessStatus: 200
 }));
-// app.set("trust proxy", 1);
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
