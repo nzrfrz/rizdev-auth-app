@@ -18,7 +18,7 @@
   "pre-commit": [
     "ts.check",
     "build",
-    "copy-client",
+    "copy-client-linux",
     "add-build"
   ],
   "keywords": [],
