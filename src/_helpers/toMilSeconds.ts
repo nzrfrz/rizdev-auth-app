@@ -1,0 +1,1 @@
+export const toMilSeconds = (hour: number, minute: number, second: number) => (hour * 60 * 60 + minute * 60 + second) * 1000;
