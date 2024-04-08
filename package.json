@@ -8,8 +8,11 @@
     "prod": "nodemon --watch src -r ts-node ./dist/app.js",
     "ts.check": "tsc --project tsconfig.json",
     "build": "rimraf dist && tsc",
-    "copy-client": "cp -R src/client dist/",
+    "copy-client-linux": "cp -R src/client dist/",
+    "copy-client-windows": "xcopy /E /I src\\client dist\\client",
     "add-build": "git add dist",
+    "build-server": "tsc --project tsconfig.json && rimraf dist && tsc && git add dist",
+    "build-fullstack": "tsc --project tsconfig.json && rimraf dist && tsc && xcopy /E /I src\\client dist\\client && git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "pre-commit": [
