@@ -12,9 +12,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const compression_1 = __importDefault(require("compression"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const ws_1 = require("ws");
+// import WebSocket, { WebSocketServer } from 'ws';
 const router_1 = __importDefault(require("./router"));
-const _helpers_1 = require("./_helpers");
+// import { setWebSocketServer } from "./_helpers";
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: true,
@@ -43,9 +43,9 @@ app.get("*", (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log(`App Running on: http://localhost:${process.env.PORT}`);
 });
-const webSocket = new ws_1.WebSocketServer({ port: parseInt(process.env.WEBSOCKET_PORT) });
-(0, _helpers_1.setWebSocketServer)(webSocket);
-webSocket.on('connection', (ws) => {
-    ws.on('error', console.error);
-});
+// const webSocket = new WebSocketServer({ port: parseInt(process.env.WEBSOCKET_PORT) });
+// setWebSocketServer(webSocket);
+// webSocket.on('connection', (ws: WebSocket) => {
+//     ws.on('error', console.error);
+// });
 //# sourceMappingURL=app.js.map

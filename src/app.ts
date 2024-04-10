@@ -8,10 +8,10 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import compression from "compression";
 import cookieParser from "cookie-parser";
-import WebSocket, { WebSocketServer } from 'ws';
+// import WebSocket, { WebSocketServer } from 'ws';
 
 import router from "./router";
-import { setWebSocketServer } from "./_helpers";
+// import { setWebSocketServer } from "./_helpers";
 
 const app = express();
 
@@ -48,10 +48,10 @@ app.listen(process.env.PORT, () => {
     console.log(`App Running on: http://localhost:${process.env.PORT}`);
 });
 
-const webSocket = new WebSocketServer({ port: parseInt(process.env.WEBSOCKET_PORT) });
+// const webSocket = new WebSocketServer({ port: parseInt(process.env.WEBSOCKET_PORT) });
 
-setWebSocketServer(webSocket);
+// setWebSocketServer(webSocket);
 
-webSocket.on('connection', (ws: WebSocket) => {
-    ws.on('error', console.error);
-});
+// webSocket.on('connection', (ws: WebSocket) => {
+//     ws.on('error', console.error);
+// });
