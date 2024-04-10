@@ -8,13 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activatingAccount = void 0;
 const _helpers_1 = require("../../_helpers");
-const ws_1 = __importDefault(require("ws"));
+// import WebSocket from 'ws';
 const models_1 = require("../../models");
 const activatingAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -26,13 +23,18 @@ const activatingAccount = (req, res) => __awaiter(void 0, void 0, void 0, functi
             return (0, _helpers_1.responseHelper)(res, _helpers_1.status.notFound, "Account not found", undefined);
         const updatePayload = { isActivated: true };
         const updateResults = yield (0, _helpers_1.updateByID)(models_1.USERS, (_b = req === null || req === void 0 ? void 0 : req.token) === null || _b === void 0 ? void 0 : _b.id, updatePayload);
-        if (_helpers_1.webSocketServer) {
-            _helpers_1.webSocketServer.clients.forEach((client) => {
-                if (client.readyState === ws_1.default.OPEN) {
+        _helpers_1.pusher.trigger("activateAccount", "activateAccount-event", {
+            message: updateResults
+        });
+        /*
+        if (webSocketServer) {
+            webSocketServer.clients.forEach((client: any) => {
+                if (client.readyState === WebSocket.OPEN) {
                     client.send(JSON.stringify(updateResults));
                 }
             });
         }
+        */
         (0, _helpers_1.responseHelper)(res, _helpers_1.status.success, "Account has been activated", updateResults);
     }
     catch (error) {

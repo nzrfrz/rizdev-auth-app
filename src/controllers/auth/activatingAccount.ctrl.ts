@@ -6,9 +6,10 @@ import {
     responseHelper,
     findDocByID,
     updateByID,
-    webSocketServer,
+    pusher,
+    // webSocketServer,
 } from "../../_helpers";
-import WebSocket from 'ws';
+// import WebSocket from 'ws';
 import { USERS } from "../../models";
 import { AuthData } from "../../middleware";
 
@@ -21,7 +22,12 @@ export const activatingAccount  = async (req: AuthData, res: express.Response) =
 
         const updatePayload = { isActivated: true };
         const updateResults = await updateByID(USERS, req?.token?.id, updatePayload);
+
+        pusher.trigger("activateAccount", "activateAccount-event", {
+            message: updateResults
+        });
         
+        /*
         if (webSocketServer) {
             webSocketServer.clients.forEach((client: any) => {
                 if (client.readyState === WebSocket.OPEN) {
@@ -29,6 +35,7 @@ export const activatingAccount  = async (req: AuthData, res: express.Response) =
                 }
             });
         }
+        */
         
         responseHelper(res, status.success, "Account has been activated", updateResults);
     } catch (error) {     

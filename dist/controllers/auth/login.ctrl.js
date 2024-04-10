@@ -8,13 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
 require("dotenv/config");
-const ws_1 = __importDefault(require("ws"));
+// import WebSocket, { WebSocketServer } from 'ws';
 const _helpers_1 = require("../../_helpers");
 const models_1 = require("../../models");
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,13 +48,18 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 };
                 const loginCredentialCookieValue = `${returnedData === null || returnedData === void 0 ? void 0 : returnedData.id}${process.env.TOKEN_SEPARATOR}${returnedData === null || returnedData === void 0 ? void 0 : returnedData.refreshToken}`;
                 (0, _helpers_1.parseCookie)(res, process.env.LOGIN_CREDENTIAL_COOKIE_NAME, loginCredentialCookieValue.toString(), false);
-                if (_helpers_1.webSocketServer) {
-                    _helpers_1.webSocketServer.clients.forEach((client) => {
-                        if (client.readyState === ws_1.default.OPEN) {
+                _helpers_1.pusher.trigger("userAuth", "login-event", {
+                    message: returnedData
+                });
+                /*
+                if (webSocketServer) {
+                    webSocketServer.clients.forEach((client: any) => {
+                        if (client.readyState === WebSocket.OPEN) {
                             client.send(JSON.stringify(returnedData));
                         }
                     });
                 }
+                */
                 return (0, _helpers_1.responseHelper)(res, _helpers_1.status.success, "Login success", returnedData);
         }
     }

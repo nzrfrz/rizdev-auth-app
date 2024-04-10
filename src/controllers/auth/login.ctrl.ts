@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import WebSocket, { WebSocketServer } from 'ws';
+// import WebSocket, { WebSocketServer } from 'ws';
 
 import { 
     status,
@@ -12,7 +12,8 @@ import {
     updateByID,
     accessTokenGenerator,
     refreshTokenGenerator,
-    webSocketServer,
+    // webSocketServer,
+    pusher,
 } from "../../_helpers";
 import { USERS, UserDocument } from "../../models";
 
@@ -55,6 +56,11 @@ export const login = async (req: express.Request, res: express.Response) => {
                 
                 parseCookie(res, process.env.LOGIN_CREDENTIAL_COOKIE_NAME, loginCredentialCookieValue.toString(), false);
 
+                pusher.trigger("userAuth", "login-event", {
+                    message: returnedData
+                });
+
+                /*
                 if (webSocketServer) {
                     webSocketServer.clients.forEach((client: any) => {
                         if (client.readyState === WebSocket.OPEN) {
@@ -62,6 +68,7 @@ export const login = async (req: express.Request, res: express.Response) => {
                         }
                     });
                 }
+                */
 
                 return responseHelper(res, status.success, "Login success", returnedData);
         }
