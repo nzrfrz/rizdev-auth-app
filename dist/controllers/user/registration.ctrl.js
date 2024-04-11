@@ -13,6 +13,7 @@ exports.registration = void 0;
 const _helpers_1 = require("../../_helpers");
 const models_1 = require("../../models");
 const registration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.headers.host);
     try {
         const { username, email, password, userRole } = req.body;
         const isUsernameExist = yield (0, _helpers_1.findOneDocument)(models_1.USERS, { username });
@@ -38,8 +39,9 @@ const registration = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 });
                 const saveResults = yield (0, _helpers_1.saveNewDocument)(payload);
                 const generateToken = (0, _helpers_1.emailLinkTokenGenerator)({ id: saveResults === null || saveResults === void 0 ? void 0 : saveResults._id.toString() });
-                yield (0, _helpers_1.sendEmail)(email, "Account Activation", "Account Activation", "accountActivation", { username, url: `${req.headers.origin}/activating-account/${generateToken}` });
+                yield (0, _helpers_1.sendEmail)(req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/", email, "Account Activation", "Account Activation", "accountActivation", { username, url: `${req.headers.origin}/activating-account/${generateToken}` });
                 (0, _helpers_1.responseHelper)(res, _helpers_1.status.success, _helpers_1.message.onlySuccess, saveResults);
+                // responseHelper(res, status.success, message.onlySuccess, {});
                 break;
         }
     }

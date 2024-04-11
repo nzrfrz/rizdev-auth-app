@@ -22,17 +22,27 @@ const transporter = nodemailer_1.default.createTransport({
         pass: 'mfmy znkv tjfk pmjl'
     }
 });
-transporter.use("compile", (0, nodemailer_express_handlebars_1.default)({
-    viewPath: "src/_emailTemplates/",
-    extName: ".html",
-    viewEngine: {
-        extname: ".html",
-        layoutsDir: "src/_emailTemplates/",
-        defaultLayout: false,
-        partialsDir: "src/_emailTemplates/"
-    },
-}));
-const sendEmail = (emailReceipient, subject, text, template, context) => __awaiter(void 0, void 0, void 0, function* () {
+// transporter.use("compile", nmExpHandlebars({
+//     viewPath: "src/_emailTemplates/" || "dist/_emailTemplates/",
+//     extName: ".html",
+//     viewEngine: {
+//         extname: ".html",
+//         layoutsDir: "src/_emailTemplates/" || "dist/_emailTemplates/",
+//         defaultLayout: false,
+//         partialsDir: "src/_emailTemplates/" || "dist/_emailTemplates/"
+//     },
+// }));
+const sendEmail = (templatePath, emailReceipient, subject, text, template, context) => __awaiter(void 0, void 0, void 0, function* () {
+    transporter.use("compile", (0, nodemailer_express_handlebars_1.default)({
+        viewPath: templatePath,
+        extName: ".html",
+        viewEngine: {
+            extname: ".html",
+            layoutsDir: templatePath,
+            defaultLayout: false,
+            partialsDir: templatePath
+        },
+    }));
     const mailOptions = {
         from: 'RizDev <no-reply@rizdev.com>',
         to: emailReceipient,

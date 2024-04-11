@@ -68,7 +68,7 @@ const changeProfileUsernameAndEmail = (req, res) => __awaiter(void 0, void 0, vo
         const _a = updateResults.toJSON(), { password, refreshToken } = _a, rest = __rest(_a, ["password", "refreshToken"]);
         if (payloadOptions.fieldChange.includes("email") === true) {
             const generateToken = (0, _helpers_1.emailLinkTokenGenerator)({ id: updateResults === null || updateResults === void 0 ? void 0 : updateResults._id.toString() });
-            yield (0, _helpers_1.sendEmail)(updateResults.email, "Account Activation", "Account Activation", "accountActivation", { username: updateResults === null || updateResults === void 0 ? void 0 : updateResults.username, url: `${req.headers.origin}/activating-account/${generateToken}` });
+            yield (0, _helpers_1.sendEmail)(req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/", updateResults.email, "Account Activation", "Account Activation", "accountActivation", { username: updateResults === null || updateResults === void 0 ? void 0 : updateResults.username, url: `${req.headers.origin}/activating-account/${generateToken}` });
         }
         (0, _helpers_1.clearCookie)(res, process.env.TOKEN_COOKIE_NAME);
         (0, _helpers_1.clearCookie)(res, process.env.LOGIN_CREDENTIAL_COOKIE_NAME);

@@ -20,7 +20,7 @@ const sendPasswordRecoveryLink = (req, res) => __awaiter(void 0, void 0, void 0,
         if (findResults === null)
             return (0, _helpers_1.responseHelper)(res, _helpers_1.status.notFound, "Email not found", { email: "Email not found" });
         const generateToken = (0, _helpers_1.emailLinkTokenGenerator)({ id: findResults === null || findResults === void 0 ? void 0 : findResults._id.toString() });
-        yield (0, _helpers_1.sendEmail)(findResults === null || findResults === void 0 ? void 0 : findResults.email, "Password Recovery", "Password Recovery", "passwordRecovery", { username: findResults === null || findResults === void 0 ? void 0 : findResults.username, url: `${req.headers.origin}/reset-password/${generateToken}` });
+        yield (0, _helpers_1.sendEmail)(req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/", findResults === null || findResults === void 0 ? void 0 : findResults.email, "Password Recovery", "Password Recovery", "passwordRecovery", { username: findResults === null || findResults === void 0 ? void 0 : findResults.username, url: `${req.headers.origin}/reset-password/${generateToken}` });
         (0, _helpers_1.responseHelper)(res, _helpers_1.status.success, "Password recovery email has been send", undefined);
     }
     catch (error) {

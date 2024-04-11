@@ -16,7 +16,7 @@ const resendActivationLink = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const { id, username, email } = req.body;
         const generateToken = (0, _helpers_1.emailLinkTokenGenerator)({ id });
-        yield (0, _helpers_1.sendEmail)(email, "Account Activation", "Account Activation", "accountActivation", { username, url: `${req.headers.origin}/activating-account/${generateToken}` });
+        yield (0, _helpers_1.sendEmail)(req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/", email, "Account Activation", "Account Activation", "accountActivation", { username, url: `${req.headers.origin}/activating-account/${generateToken}` });
         (0, _helpers_1.clearCookie)(res, process.env.TOKEN_COOKIE_NAME);
         (0, _helpers_1.clearCookie)(res, process.env.LOGIN_CREDENTIAL_COOKIE_NAME);
         (0, _helpers_1.responseHelper)(res, _helpers_1.status.success, "Email activation has been send", undefined);
