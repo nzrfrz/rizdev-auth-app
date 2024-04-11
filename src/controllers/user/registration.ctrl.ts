@@ -14,8 +14,6 @@ import {
 import { USERS } from "../../models";
 
 export const registration = async (req: express.Request, res: express.Response) => {
-    console.log(req.headers.host);
-    
     try {
         const { username, email, password, userRole } = req.body;
         const isUsernameExist = await findOneDocument(USERS, { username });

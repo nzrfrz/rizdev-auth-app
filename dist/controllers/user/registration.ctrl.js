@@ -13,7 +13,6 @@ exports.registration = void 0;
 const _helpers_1 = require("../../_helpers");
 const models_1 = require("../../models");
 const registration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.headers.host);
     try {
         const { username, email, password, userRole } = req.body;
         const isUsernameExist = yield (0, _helpers_1.findOneDocument)(models_1.USERS, { username });
