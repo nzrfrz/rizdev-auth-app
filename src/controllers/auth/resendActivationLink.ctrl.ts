@@ -16,6 +16,7 @@ export const resendActivationLink = async (req: express.Request, res: express.Re
         const generateToken = emailLinkTokenGenerator({ id });
         
         await sendEmail(
+            req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/",
             email,
             "Account Activation",
             "Account Activation",

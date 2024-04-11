@@ -4,8 +4,6 @@ import {
     status,
     message,
     responseHelper,
-    sendEmail,
-    clearCookie,
     findDocByID,
 } from "../../_helpers";
 import { USERS } from "../../models";

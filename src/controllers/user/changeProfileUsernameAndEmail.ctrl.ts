@@ -70,6 +70,7 @@ export const changeProfileUsernameAndEmail = async (req: AuthData, res: express.
         if (payloadOptions.fieldChange.includes("email") === true) {
             const generateToken = emailLinkTokenGenerator({ id: updateResults?._id.toString() });
             await sendEmail(
+                req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/",
                 updateResults.email,
                 "Account Activation",
                 "Account Activation",

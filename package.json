@@ -10,15 +10,18 @@
     "build": "rimraf dist && tsc",
     "copy-client-linux": "cp -R src/client dist/",
     "copy-client-windows": "xcopy /E /I src\\client dist\\client",
+    "copy-template-linux": "cp -R src/_emailTemplates dist/",
+    "copy-template-windows": "xcopy /E /I src\\_emailTemplates dist\\_emailTemplates",
     "add-build": "git add dist",
     "build-server": "tsc --project tsconfig.json && rimraf dist && tsc && git add dist",
-    "build-fullstack": "tsc --project tsconfig.json && rimraf dist && tsc && xcopy /E /I src\\client dist\\client && git add dist",
+    "build-fullstack": "tsc --project tsconfig.json && rimraf dist && tsc && xcopy /E /I src\\client dist\\client && xcopy /E /I src\\_emailTemplates dist\\_emailTemplates && git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "pre-commit": [
     "ts.check",
     "build",
     "copy-client-linux",
+    "copy-template-linux",
     "add-build"
   ],
   "keywords": [],

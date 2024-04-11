@@ -9,18 +9,37 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-transporter.use("compile", nmExpHandlebars({
-    viewPath: "src/_emailTemplates/",
-    extName: ".html",
-    viewEngine: {
-        extname: ".html",
-        layoutsDir: "src/_emailTemplates/",
-        defaultLayout: false,
-        partialsDir: "src/_emailTemplates/"
-    },
-}));
+// transporter.use("compile", nmExpHandlebars({
+//     viewPath: "src/_emailTemplates/" || "dist/_emailTemplates/",
+//     extName: ".html",
+//     viewEngine: {
+//         extname: ".html",
+//         layoutsDir: "src/_emailTemplates/" || "dist/_emailTemplates/",
+//         defaultLayout: false,
+//         partialsDir: "src/_emailTemplates/" || "dist/_emailTemplates/"
+//     },
+// }));
 
-export const sendEmail = async (emailReceipient: string, subject: string, text: string, template: string, context: {}) => {
+export const sendEmail = async (
+    templatePath: string, 
+    emailReceipient: string, 
+    subject: string, 
+    text: string, 
+    template: string, 
+    context: {}
+    
+) => {
+    transporter.use("compile", nmExpHandlebars({
+        viewPath: templatePath,
+        extName: ".html",
+        viewEngine: {
+            extname: ".html",
+            layoutsDir: templatePath,
+            defaultLayout: false,
+            partialsDir: templatePath
+        },
+    }));
+
     const mailOptions = {
         from: 'RizDev <no-reply@rizdev.com>',
         to: emailReceipient,

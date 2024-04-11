@@ -14,6 +14,8 @@ import {
 import { USERS } from "../../models";
 
 export const registration = async (req: express.Request, res: express.Response) => {
+    console.log(req.headers.host);
+    
     try {
         const { username, email, password, userRole } = req.body;
         const isUsernameExist = await findOneDocument(USERS, { username });
@@ -42,6 +44,7 @@ export const registration = async (req: express.Request, res: express.Response) 
                 const generateToken = emailLinkTokenGenerator({ id: saveResults?._id.toString() });
                 
                 await sendEmail(
+                    req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/",
                     email,
                     "Account Activation",
                     "Account Activation",
@@ -49,6 +52,7 @@ export const registration = async (req: express.Request, res: express.Response) 
                     { username, url: `${req.headers.origin}/activating-account/${generateToken}` }
                 );
                 responseHelper(res, status.success, message.onlySuccess, saveResults);
+                // responseHelper(res, status.success, message.onlySuccess, {});
                 break;
         }
     } catch (error) {     

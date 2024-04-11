@@ -21,6 +21,7 @@ export const sendPasswordRecoveryLink = async (req: express.Request, res: expres
         const generateToken = emailLinkTokenGenerator({ id: findResults?._id.toString() });
         
         await sendEmail(
+            req.headers.host.includes("localhost") ? "src/_emailTemplates/" : "dist/_emailTemplates/",
             findResults?.email,
             "Password Recovery",
             "Password Recovery",
