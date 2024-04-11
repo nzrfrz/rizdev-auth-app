@@ -24,6 +24,7 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "client")));
+app.use(express.static(path.join(__dirname, "_emailTemplates")));
 
 mongoose.Promise = global.Promise;
 mongoose.set("strictQuery", false).connect(process.env.MONGODB_URI)
